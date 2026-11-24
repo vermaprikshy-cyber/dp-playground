@@ -7,6 +7,10 @@
     {
       "source": "/health",
       "destination": "https://dp-playground.onrender.com/health"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
