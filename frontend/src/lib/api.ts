@@ -1,6 +1,6 @@
 import { AlgorithmDetail, RunResponse } from '../types';
 
-const BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const BASE_URL = (((import.meta as any).env?.VITE_API_URL as string) || '').replace(/\/+$/, '');
 const API_BASE = `${BASE_URL}/api/v1`;
 
 export async function fetchHealth(): Promise<{ status: string; worker_ready: boolean }> {
