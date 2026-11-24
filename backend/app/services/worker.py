@@ -37,8 +37,8 @@ def worker_path() -> Path:
         return Path(override)
     build_dir = repo_root() / "engine" / "build"
     # On Windows with Application Control policies, test_worker.exe or test_dp.exe
-    # conforms to AppControl whitelists for test binaries.
-    for name in ("test_worker.exe", "test_dp.exe", "dp_worker.exe"):
+    # conforms to AppControl whitelists for test binaries. On Linux/Docker, dp_worker without .exe is used.
+    for name in ("test_worker.exe", "test_dp.exe", "dp_worker.exe", "dp_worker", "test_worker"):
         cand = build_dir / name
         if cand.is_file():
             return cand

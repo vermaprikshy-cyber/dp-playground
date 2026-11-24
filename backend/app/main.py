@@ -1,4 +1,5 @@
 import logging
+import os
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
@@ -19,14 +20,20 @@ app = FastAPI(
     summary="Run Fibonacci, Climbing Stairs, and 0/1 Knapsack and return an ordered trace.",
 )
 
+allowed_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+]
+env_origins = os.environ.get("CORS_ORIGINS")
+if env_origins:
+    allowed_origins.extend([o.strip() for o in env_origins.split(",") if o.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:4173",
-        "http://127.0.0.1:4173",
-    ],
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"^https://.*\.vercel\.app$",
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type", "Accept"],

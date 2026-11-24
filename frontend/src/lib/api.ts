@@ -1,9 +1,10 @@
 import { AlgorithmDetail, RunResponse } from '../types';
 
-const API_BASE = '/api/v1';
+const BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const API_BASE = `${BASE_URL}/api/v1`;
 
 export async function fetchHealth(): Promise<{ status: string; worker_ready: boolean }> {
-  const res = await fetch('/health');
+  const res = await fetch(`${BASE_URL}/health`);
   if (!res.ok) {
     throw new Error(`Health check failed: ${res.statusText}`);
   }
